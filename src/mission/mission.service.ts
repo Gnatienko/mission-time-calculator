@@ -10,7 +10,6 @@ export class MissionService {
     const windData = await this.windApiService.getWind(lon, lat);
     console.log(windData)
 
-
     return { mission: missionData, windData: windData.data };
   }
 

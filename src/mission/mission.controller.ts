@@ -1,16 +1,16 @@
-import { WindApiService } from './wind-api/wind-api.service';
-import { Controller, Get, Query } from '@nestjs/common';
+import { Controller, Post, Body } from '@nestjs/common';
 import { MissionService } from './mission.service';
 
 @Controller('/mission/time')
 export class MissionController {
-    constructor(private readonly missionService: MissionService, private readonly windApiService: WindApiService) {}
+    constructor(private readonly missionService: MissionService) {}
 
-    @Get()
-    async getMissionData(@Query('lon') lon: number, @Query('lat') lat: number): Promise<{ mission: string, windData: any }> {
-        const missionData = (await this.missionService.getMissionData(lon, lat)).mission;
-        const windData = (await this.missionService.getMissionData(lon, lat)).windData;
+    @Post()
+    async getMissionData(@Body()body: { lon: number; lat: number }): Promise<{ missionTime: string }> {
+        const missionTime = (await this.missionService.getMissionData(body.lon, body.lat)).mission;
 
-        return { mission: missionData, windData: windData };
+
+
+        return { missionTime: missionTime };
     }
 }
