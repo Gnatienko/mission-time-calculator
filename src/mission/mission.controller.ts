@@ -6,8 +6,8 @@ export class MissionController {
     constructor(private readonly missionService: MissionService) {}
 
     @Post()
-    async getMissionData(@Body()body: { lon: number; lat: number }): Promise<{ missionTime: string }> {
-        const missionTime = (await this.missionService.getMissionData(body.lon, body.lat)).mission;
+    async getMissionData(@Body()body: { lon: number; lat: number }[]): Promise<{ missionTime: string }> {
+        const missionTime = (await this.missionService.getMissionData(body[0].lon, body[0].lat)).windData;
 
 
 
