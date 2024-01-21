@@ -1,10 +1,8 @@
-import { Module } from '@nestjs/common';
+import { Module } from "@nestjs/common";
 
-
-import { MissionModule } from './mission/mission.module';
+import { MissionModule } from "./mission/mission.module";
 
 @Module({
   imports: [MissionModule],
-
 })
 export class AppModule {}
