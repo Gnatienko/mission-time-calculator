@@ -1,7 +1,6 @@
 import { Injectable } from "@nestjs/common"
 import { WindApiService } from "./wind-api/wind-api.service"
 import { SpeedConvertorService } from "./speed-convertor/speed-convertor.service"
-import { link } from "fs"
 
 const geolib = require("geolib")
 
@@ -31,7 +30,7 @@ export class MissionService {
       const windData = await this.windApiService.getWind(
         startPoint.lat,
         startPoint.lon
-      ) //assuming that links are not big and there is no point to calculate average wind data
+      ) //assuming that links are not big and there is no point in calculating average wind data
 
       const windSpeed = windData.data.current.wind_speed_10m
       const windDirection = windData.data.current.wind_direction_10m
@@ -53,19 +52,8 @@ export class MissionService {
       const linkTime = link.lengthInM / linkGroundSpeed
 
       missionTime += linkTime
-      console.log(linkGroundSpeed)
     }
-    console.log(missionLinks)
-    console.log(missionTime)
-
-    console.log("---------")
 
     return { missionTime: missionTime }
   }
 }
-
-//перебераем все координаты миссии
-//находи градус нправления и дистанцию ланки
-//находим ветер для каждой пары через апи
-//считаем влияние ветра на скорость
-//считаем время из дистанции и средней скорости

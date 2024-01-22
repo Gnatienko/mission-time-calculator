@@ -8,6 +8,14 @@ export class WindApiService {
 
   async getWind(lon: any, lat: any): Promise<AxiosResponse<any>> {
     const apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=wind_direction_10m,wind_speed_10m`
-    return await this.httpService.get(apiUrl).toPromise()
+
+    try {
+      const response = await this.httpService.get(apiUrl).toPromise()
+      return response
+    } catch (error: any) {
+      const errorMessage =
+        error.message || "An error occurred while fetching wind data."
+      throw new Error(`Failed to fetch wind data: ${errorMessage}`)
+    }
   }
 }
