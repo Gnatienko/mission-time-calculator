@@ -32,8 +32,8 @@ export class MissionService {
         startPoint.lon
       ) //assuming that links are not big and there is no point in calculating average wind data
 
-      const windSpeed = windData.data.current.wind_speed_10m
-      const windDirection = windData.data.current.wind_direction_10m
+      const windSpeed = windData.windSpeed
+      const windDirection = windData.windDirection
 
       missionLinks.push({ heading, lengthInM, windSpeed, windDirection })
     }

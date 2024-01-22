@@ -6,12 +6,19 @@ import { AxiosResponse } from "axios"
 export class WindApiService {
   constructor(private readonly httpService: HttpService) {}
 
-  async getWind(lon: any, lat: any): Promise<AxiosResponse<any>> {
+  async getWind(
+    lon: any,
+    lat: any
+  ): Promise<{ windSpeed: number; windDirection: number }> {
     const apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=wind_direction_10m,wind_speed_10m`
 
     try {
       const response = await this.httpService.get(apiUrl).toPromise()
-      return response
+
+      const windSpeed = response.data.current.wind_speed_10m
+      const windDirection = response.data.current.wind_direction_10m
+
+      return { windSpeed, windDirection }
     } catch (error: any) {
       const errorMessage =
         error.message || "An error occurred while fetching wind data."
