@@ -15,6 +15,7 @@ export class MissionService {
       windSpeed: number
       windDirection: number
     }[] = []
+    const droneSpeed = 120 / 3.6 //   km/h->m/s
 
     for (let i = 0; i < missionData.length - 1; i++) {
       const startPoint = missionData[i]
@@ -39,6 +40,7 @@ export class MissionService {
     return { mission: missionTime }
   }
 }
+
 //перебераем все координаты миссии
 //находи градус нправления и дистанцию ланки
 //находим ветер для каждой пары через апи
