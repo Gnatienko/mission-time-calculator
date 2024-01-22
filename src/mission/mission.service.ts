@@ -54,8 +54,6 @@ export class MissionService {
       missionTime += linkTime
     }
 
-    missionTime = Math.round(missionTime)
-
-    return { missionTime: missionTime }
+    return { missionTime: Math.round(missionTime) }
   }
 }
