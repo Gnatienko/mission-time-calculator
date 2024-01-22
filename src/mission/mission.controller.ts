@@ -9,7 +9,8 @@ export class MissionController {
   async getMissionData(
     @Body() body: { lon: number; lat: number }[]
   ): Promise<{ missionTime: number }> {
-    const missionTime = (await this.missionService.getMissionData(body)).mission
+    const missionTime = (await this.missionService.getMissionTime(body))
+      .missionTime
 
     return { missionTime: missionTime }
   }
