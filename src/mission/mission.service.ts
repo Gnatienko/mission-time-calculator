@@ -3,6 +3,14 @@ import { WindApiService } from "./wind-api/wind-api.service"
 import { SpeedConvertorService } from "./speed-convertor/speed-convertor.service"
 
 const geolib = require("geolib")
+const AIRSPEED_KMH = 120
+
+type MissionLink = {
+  heading: number
+  lengthInM: number
+  windSpeed: number
+  windDirection: number
+}
 
 @Injectable()
 export class MissionService {
@@ -14,12 +22,7 @@ export class MissionService {
   async getMissionTime(
     missionData: { lon: number; lat: number }[]
   ): Promise<{ missionTime: number }> {
-    const missionLinks: {
-      heading: number
-      lengthInM: number
-      windSpeed: number
-      windDirection: number
-    }[] = []
+    const missionLinks: MissionLink[] = []
 
     for (let i = 0; i < missionData.length - 1; i++) {
       const startPoint = missionData[i]
@@ -27,22 +30,16 @@ export class MissionService {
 
       const heading = geolib.getRhumbLineBearing(startPoint, endPoint)
       const lengthInM = geolib.getDistance(startPoint, endPoint)
-      const windData = await this.windApiService.getWind(
+      const { windSpeed, windDirection } = await this.windApiService.getWind(
         startPoint.lat,
         startPoint.lon
       )
 
-      const windSpeed = windData.windSpeed
-      const windDirection = windData.windDirection
-
       missionLinks.push({ heading, lengthInM, windSpeed, windDirection })
     }
 
-    let missionTime = 0
-    let airSpeedInKMH = 120
-
-    for (const link of missionLinks) {
-      const airSpeed = this.speedConvertorService.toMS(airSpeedInKMH)
+    let missionTime = missionLinks.reduce((totalTime, link) => {
+      const airSpeed = this.speedConvertorService.toMS(AIRSPEED_KMH)
       const linkGroundSpeed = this.speedConvertorService.calculateGroundSpeed(
         airSpeed,
         link.windSpeed,
@@ -51,8 +48,8 @@ export class MissionService {
       )
       const linkTime = link.lengthInM / linkGroundSpeed
 
-      missionTime += linkTime
-    }
+      return totalTime + linkTime
+    }, 0)
 
     return { missionTime: Math.round(missionTime) }
   }
