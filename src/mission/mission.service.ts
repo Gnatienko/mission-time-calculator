@@ -3,7 +3,6 @@ import { WindApiService } from "./wind-api/wind-api.service"
 import { SpeedConvertorService } from "./speed-convertor/speed-convertor.service"
 
 const geolib = require("geolib")
-const AIRSPEED_KMH = 120
 
 type MissionLink = {
   heading: number
@@ -39,14 +38,8 @@ export class MissionService {
     }
 
     let missionTime = missionLinks.reduce((totalTime, link) => {
-      const airSpeed = this.speedConvertorService.toMS(AIRSPEED_KMH)
-      const linkGroundSpeed = this.speedConvertorService.calculateGroundSpeed(
-        airSpeed,
-        link.windSpeed,
-        link.windDirection,
-        link.heading
-      )
-      const linkTime = link.lengthInM / linkGroundSpeed
+      const linkTime = this.speedConvertorService.calculateLinkTime(link)
+      console.log(linkTime)
 
       return totalTime + linkTime
     }, 0)

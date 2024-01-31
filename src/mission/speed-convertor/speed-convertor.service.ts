@@ -1,5 +1,13 @@
 import { Injectable } from "@nestjs/common"
 const geolib = require("geolib")
+const AIRSPEED_KMH = 120
+
+type MissionLink = {
+  heading: number
+  lengthInM: number
+  windSpeed: number
+  windDirection: number
+}
 
 @Injectable()
 export class SpeedConvertorService {
@@ -20,5 +28,16 @@ export class SpeedConvertorService {
     const groundSpeed = airSpeed + windComponent
 
     return groundSpeed
+  }
+
+  calculateLinkTime(link: MissionLink): number {
+    const airSpeed = this.toMS(AIRSPEED_KMH)
+    const linkGroundSpeed = this.calculateGroundSpeed(
+      airSpeed,
+      link.windSpeed,
+      link.windDirection,
+      link.heading
+    )
+    return link.lengthInM / linkGroundSpeed
   }
 }
