@@ -12,7 +12,7 @@ export class MissionService {
   ) {}
 
   async getMissionTime(
-    missionData: { lon: number; lat: number }[] //assuming that altitude is const
+    missionData: { lon: number; lat: number }[]
   ): Promise<{ missionTime: number }> {
     const missionLinks: {
       heading: number
@@ -30,7 +30,7 @@ export class MissionService {
       const windData = await this.windApiService.getWind(
         startPoint.lat,
         startPoint.lon
-      ) //assuming that links are not big and there is no point in calculating average wind data
+      )
 
       const windSpeed = windData.windSpeed
       const windDirection = windData.windDirection
