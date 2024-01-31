@@ -1,15 +1,10 @@
 import { Injectable } from "@nestjs/common"
+import { MissionLink } from "./mission.types"
+
 const AIRSPEED_KMH = 120
 
-type MissionLink = {
-  heading: number
-  lengthInM: number
-  windSpeed: number
-  windDirection: number
-}
-
 @Injectable()
-export class SpeedConvertorService {
+export class MissionHelper {
   toMS(KMHSpeed: number): number {
     const conversionFactor = 1000 / 3600
     const MSSpeed = KMHSpeed * conversionFactor

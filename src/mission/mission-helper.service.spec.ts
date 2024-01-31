@@ -1,15 +1,15 @@
 import { Test, TestingModule } from "@nestjs/testing"
-import { SpeedConvertorService } from "./mission-helper.service"
+import { MissionHelper } from "./mission-helper.service"
 
 describe("SpeedConvertorService", () => {
-  let service: SpeedConvertorService
+  let service: MissionHelper
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [SpeedConvertorService],
+      providers: [MissionHelper],
     }).compile()
 
-    service = module.get<SpeedConvertorService>(SpeedConvertorService)
+    service = module.get<MissionHelper>(MissionHelper)
   })
 
   describe("toMS", () => {
