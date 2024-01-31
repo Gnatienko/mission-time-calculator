@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common"
 import { WindApiService } from "./wind-api/wind-api.service"
-import { SpeedConvertorService } from "./speed-convertor/speed-convertor.service"
+import { SpeedConvertorService } from "./mission-helper.service"
 
 const geolib = require("geolib")
 

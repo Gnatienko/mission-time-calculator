@@ -1,5 +1,5 @@
 import { Test, TestingModule } from "@nestjs/testing"
-import { SpeedConvertorService } from "./speed-convertor.service"
+import { SpeedConvertorService } from "./mission-helper.service"
 
 describe("SpeedConvertorService", () => {
   let service: SpeedConvertorService

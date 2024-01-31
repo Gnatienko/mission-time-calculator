@@ -1,5 +1,4 @@
 import { Injectable } from "@nestjs/common"
-const geolib = require("geolib")
 const AIRSPEED_KMH = 120
 
 type MissionLink = {
