@@ -1,6 +1,13 @@
 export type MissionLink = {
-  heading: number
   lengthInM: number
   windSpeed: number
   windDirection: number
+  heading: number
+}
+
+export type AircraftData = {
+  airSpeed: number
+  windSpeed: number
+  windDirection: number
+  heading: number
 }

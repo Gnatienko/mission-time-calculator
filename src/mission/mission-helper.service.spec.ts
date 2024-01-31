@@ -29,12 +29,12 @@ describe("SpeedConvertorService", () => {
       const windDirection = 30
       const heading = 90
       const expectedGroundSpeed = 110
-      const result = service.calculateGroundSpeed(
+      const result = service.calculateGroundSpeed({
         airSpeed,
         windSpeed,
         windDirection,
-        heading
-      )
+        heading,
+      })
 
       expect(result).toBe(expectedGroundSpeed)
     })
