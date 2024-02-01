@@ -1,12 +1,20 @@
 import { Test, TestingModule } from "@nestjs/testing"
 import { MissionHelper } from "./mission-helper.service"
+import { WindApiService } from "./wind-api/wind-api.service"
+import { HttpService } from "@nestjs/axios"
+
+class MockHttpService {}
 
 describe("SpeedConvertorService", () => {
   let service: MissionHelper
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [MissionHelper],
+      providers: [
+        MissionHelper,
+        WindApiService,
+        { provide: HttpService, useClass: MockHttpService },
+      ],
     }).compile()
 
     service = module.get<MissionHelper>(MissionHelper)
