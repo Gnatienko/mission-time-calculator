@@ -15,7 +15,6 @@ export class MissionService {
 
     const missionTime = missionLinks.reduce((totalTime, link) => {
       const linkTime = this.missionHelper.calculateLinkTime(link)
-      console.log(linkTime)
       return totalTime + linkTime
     }, 0)
 
